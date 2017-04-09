@@ -135,6 +135,16 @@ void handleRoot() {
   webServer.send(200, "text/html", webpage);
 }
 
+void handleSet(){
+  Serial.println("handle Set..");
+  getTargets();
+  for (int i = 0; i < 3; i++) {
+    currentColor[i] = targetColor[i];
+    analogWrite(colorPin[i], 1023-currentColor[i]);
+  }
+  handleStatus();
+}
+
 void handleSwitch(){
   Serial.println("handle WFD-Switch..");
   webServer.send(200, "text/html");
@@ -282,6 +292,7 @@ void loop() {
     webServer.on("/", handleRoot);
     webServer.on("/status", handleStatus);
     webServer.on("/switch", handleSwitch);
+    webServer.on("/set", handleSet);
     webServer.begin();
     testRGB();
     Mode = 1;
