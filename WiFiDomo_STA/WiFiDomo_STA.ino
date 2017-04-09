@@ -119,15 +119,18 @@ String webpage = "<!DOCTYPE html><html><head><title>RGB control</title><meta nam
                  " })();"
                  "</script></html>";
 
-void handleRoot() {
-  Serial.println("handle root..");
-  int i;
-  for (i = 0; i < 3; i++) {
+void getTargets() {
+  for (int i = 0; i < 3; i++) {
     String val = webServer.arg(i);
     if (val != "") {
       targetColor[i] = val.toInt();
     }
   }
+}
+
+void handleRoot() {
+  Serial.println("handle root..");
+  getTargets();
   adjustColor();
   webServer.send(200, "text/html", webpage);
 }
@@ -135,13 +138,7 @@ void handleRoot() {
 void handleSwitch(){
   Serial.println("handle WFD-Switch..");
   webServer.send(200, "text/html");
-  int i;
-  for (i = 0; i < 3; i++) {
-    String val = webServer.arg(i);
-    if (val != "") {
-      targetColor[i] = val.toInt();
-    }
-  }
+  getTargets();
   adjustColor();
 }
 
@@ -223,13 +220,11 @@ void loop() {
     //reset settings - for testing
     wifiManager.resetSettings();
 
-wifiManager.addParameter(&custom_host_nr);
-wifiManager.addParameter(&custom_host_nr_choice);
+    wifiManager.addParameter(&custom_host_nr);
+    wifiManager.addParameter(&custom_host_nr_choice);
 
     analogWrite(REDPIN, 1023);
 
-    //Blink();
-    
     //sets timeout until configuration portal gets turned off
     //useful to make it all retry or go to sleep
     //in seconds
@@ -268,7 +263,6 @@ wifiManager.addParameter(&custom_host_nr_choice);
       delay(1000);
       Mode = 0;
       analogWrite(REDPIN, 1023);
-      //Blink();
       wifiManager.addParameter(&custom_host_nr);
       wifiManager.addParameter(&custom_host_nr_choice);
 
