@@ -123,7 +123,7 @@ void getTargets() {
   for (int i = 0; i < 3; i++) {
     String val = webServer.arg(i);
     if (val != "") {
-      targetColor[i] = val.toInt();
+      targetColor[i] = val.toInt() & 1023;
     }
   }
 }
