@@ -2,12 +2,15 @@
 WiFiDomo (Stand Alone)
 
 ## Description
+This is the source code to the Wifidomo project, a remote LED strip controller through wifi.
+See http://www.voc-electronics.com/c-3482954/voc-domotica/ for more information on the hardware.
 
 ### Branches
 * origin/master - Master Branch
 * origin/Development - development branch
 
-## Whishlist:
+## Wishlist:
+* none
 
 ## DISCLAIMER
 
